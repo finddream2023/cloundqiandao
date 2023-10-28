@@ -1,17 +1,16 @@
 name: cloundqiandao
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
   schedule:
     - cron: 10 1,9 * * *
+  watch:
+        types: [started]
     
 jobs:
   check-in:
     runs-on: ubuntu-latest
-
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id || github.actor == 'BlueSkyClouds'
     steps:
     - uses: actions/checkout@v2
 
